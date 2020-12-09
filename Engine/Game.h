@@ -23,7 +23,9 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-
+#include "Ball.h"
+#include "Brick.h"
+#include <random>
 class Game
 {
 public:
@@ -36,11 +38,19 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+	void DestroyBrick(int i, int j);
+	void CheckBrickCollision();
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	Ball balls[10];
+	int currBalls = 0;
+	static constexpr int brickRows = 10;
+	static constexpr int brickCols = 15;
+	Brick bricks[brickRows][brickCols];
+	int currBricks = brickRows * brickCols;
 	/********************************/
 };

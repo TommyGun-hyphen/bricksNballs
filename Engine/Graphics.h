@@ -58,6 +58,7 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	~Graphics();
+	//Draw functions
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
 	Microsoft::WRL::ComPtr<ID3D11Device>				pDevice;
