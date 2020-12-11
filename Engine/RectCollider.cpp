@@ -3,8 +3,7 @@
 RectCollider::RectCollider(Vec2 pos, int width, int height):
 	pos(pos),
 	width(width),
-	height(height),
-	Colliding(false)
+	height(height)
 {
 }
 
@@ -12,5 +11,5 @@ RectCollider::RectCollider(Vec2 pos, int width, int height):
 bool RectCollider::isColliding(RectCollider other)
 {
 
-	return !(pos.GetX() + width < other.pos.GetX() || pos.GetX() > other.pos.GetX() + other.width) && (  pos.GetY() + width < other.pos.GetY() || pos.GetY() > other.pos.GetY() + other.width  );
+	return !(pos.GetX() + width <= other.pos.GetX() || pos.GetX() >= other.pos.GetX() + other.width) && !(  pos.GetY() + width <= other.pos.GetY() || pos.GetY() >= other.pos.GetY() + other.width  );
 }

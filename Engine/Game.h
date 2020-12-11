@@ -38,7 +38,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void DestroyBrick(int i, int j);
+	void DestroyBrick(int i);
 	void CheckBrickCollision();
 	/********************************/
 private:
@@ -50,7 +50,7 @@ private:
 	int currBalls = 0;
 	static constexpr int brickRows = 10;
 	static constexpr int brickCols = 15;
-	Brick bricks[brickRows][brickCols];
+	Brick bricks[brickRows * brickCols];
 	int currBricks = brickRows * brickCols;
 	/********************************/
 };

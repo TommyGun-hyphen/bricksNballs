@@ -13,4 +13,8 @@ void Brick::Draw(Graphics& gfx)
 			gfx.PutPixel(i, j, c);
 		}
 	}
+	gfx.PutPixel(collider.GetX(), collider.GetY(), Colors::Red);
+	gfx.PutPixel(collider.GetX() + collider.GetWidth(), collider.GetY() + collider.GetHeight(), Colors::Red);
+	gfx.PutPixel(collider.GetX(), collider.GetY() + collider.GetHeight(), Colors::Red);
+	gfx.PutPixel(collider.GetX() + collider.GetWidth(), collider.GetY(), Colors::Red);
 }
