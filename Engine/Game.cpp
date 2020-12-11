@@ -26,11 +26,17 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )
 {
-	//initializing all Bricks in the bricks[][] matrix
-	for (int j = 0; j < 10; j++) {
-		for (int i = 0; i < 15; i++) {
-			bricks[j][i].Init(Vec2(float( (3+Brick::width)* i +3 ),float( (2+Brick::height)*j) ), 50, 20, Colors::Blue);
+	//initializing all Bricks in the bricks[] array
+	int row = 0;
+	int col = 0;
+	for (int i = 0; i < currBricks; i++) {
+		if (col > brickCols-1) {
+			col = 0;
+			row++;
 		}
+		bricks[i].Init(Vec2( (3+50)*col+3 , (2+20)*row + 2 ), 50, 20, Colors::Blue);
+
+		col++;
 	}
 	//initializing the first Ball	
 	balls[currBalls].Init(Vec2(400.0f, 350.0f), Vec2(3.0f, 3.0f), 20, Colors::Yellow);
@@ -47,28 +53,17 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	CheckBrickCollision();
 	for (int i = 0; i < currBalls; i++) {
 		balls[0].Update();
 	}
+	
 }
 
-void Game::DestroyBrick(int j, int i)
+void Game::DestroyBrick(int i)
 {
-	const int currElement = j * brickCols + i +1;
-	for (int k = currElement; k < currBricks; k++) {
-		if (i > brickCols - 1) {
-			j++;
-			i = 0;
-		}
-
-		if (i + 1 < brickCols) {
-			bricks[i][j] = bricks[i + 1][j];
-		}
-		else
-		{
-			bricks[i][j] = bricks[0][j + 1];
-		}
-		i++;
+	for ( ; i < currBricks-1; i++) {
+		bricks[i] = bricks[i + 1];
 	}
 	currBricks--;
 }
@@ -78,17 +73,18 @@ void Game::CheckBrickCollision()
 	for (int i = 0; i < currBalls; i++) {
 		int brickCounter = 0;
 		for (int j = 0; j < currBricks; j++) {
-			
+			if (balls[i].IsColliding(bricks[j].GetCollider())) {
+				DestroyBrick(j);
+				balls[i].ChangeColor();
+			}
 		}
 	}
 }
 
 void Game::ComposeFrame()
 {
-	for (int j = 0; j < 10; j++) {
-		for (int i = 0; i < 15; i++) {
-			bricks[j][i].Draw(gfx);
-		}
+	for (int i = 0; i < currBricks; i++) {
+		bricks[i].Draw(gfx);
 	}
 	for (int i = 0; i < currBalls; i++) {
 		balls[i].Draw(gfx);

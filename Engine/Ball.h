@@ -14,9 +14,13 @@ private:
 	Vec2 center;
 	Color c;
 	Vec2 velocity;
+	void RevertY() { velocity = Vec2(velocity.GetX(), -velocity.GetY()); }
+	void RevertX(){ velocity = Vec2( -velocity.GetX(), velocity.GetY()); }
 public:
 	void Draw(Graphics& gfx)const;
 	void Update();
 	bool IsColliding(RectCollider& other);
+	
+	void ChangeColor() { c = Colors::Red; }
 };
 

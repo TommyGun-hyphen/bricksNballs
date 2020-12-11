@@ -24,6 +24,40 @@ void Ball::Update()
 
 bool Ball::IsColliding(RectCollider& other)
 {
+	if (collider.isColliding(other)) {
+		if (velocity.GetX() > 0 && velocity.GetY() > 0) {
+			if ((collider.GetX() + collider.GetWidth()) - other.GetX() < (collider.GetY() + collider.GetHeight()) - other.GetY()) {
+				RevertX();
+			}
+			else {
+				RevertY();
+			}
+		}
+		else if (velocity.GetX() < 0 && velocity.GetY() < 0) {
+			if (other.GetX() + other.GetWidth() - collider.GetX() < other.GetY() + other.GetHeight() - collider.GetY()) {
+				RevertX();
+			}
+			else {
+				RevertY();
+			}
+		}
+		else if (velocity.GetX() < 0 && velocity.GetY() > 0) {
+			if (other.GetX() + other.GetWidth() - collider.GetX() < (collider.GetY() + collider.GetHeight()) - other.GetY()) {
+				RevertX();
+			}
+			else {
+				RevertY();
+			}
+		}
+		else if (velocity.GetX() > 0 && velocity.GetY() < 0) {
+			if ((collider.GetY() + collider.GetHeight()) - other.GetY() < other.GetX() + other.GetWidth() - collider.GetX()) {
+				RevertX();
+			}
+			else {
+				RevertY();
+			}
+		}
+	}
 	return collider.isColliding(other);
 }
 
@@ -36,6 +70,7 @@ void Ball::Draw(Graphics& gfx)const
 			}
 		}
 	}
+	gfx.PutPixel(collider.GetX(), collider.GetY(), Colors::Red);
 }
 //updates position using the velocity
 
